@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/fragmentAll">
+
+    <fragment
+        android:id="@+id/fragmentAll"
+        android:name="com.androidstudio.gettxtroomrx.fragments.all.FragmentAll"
+        android:label="fragment_all"
+        tools:layout="@layout/fragment_all" >
+        <action
+            android:id="@+id/action_fragmentAll_to_fragmentUpdate"
+            app:destination="@id/fragmentUpdate" />
+        <action
+            android:id="@+id/action_fragmentAll_to_fragmentCadastro"
+            app:destination="@id/fragmentCadastro" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentUpdate"
+        android:name="com.androidstudio.gettxtroomrx.fragments.update.FragmentUpdate"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" />
+    <fragment
+        android:id="@+id/fragmentCadastro"
+        android:name="com.androidstudio.gettxtroomrx.fragments.cadastro.FragmentCadastro"
+        android:label="fragment_cadastro"
+        tools:layout="@layout/fragment_cadastro" />
+</navigation>

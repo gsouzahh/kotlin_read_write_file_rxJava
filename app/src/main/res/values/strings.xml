@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GetTxtRoomRx</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="cadastrar_funcion_rio">Cadastrar Funcionário</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="reservado_2">Reservado 2</string>
+    <string name="reservado_1">Reservado 1</string>
+    <string name="cargo">Cargo</string>
+    <string name="nome">Nome</string>
+    <string name="atualizar_dados">Atualizar Dados</string>
+</resources>
