@@ -16,15 +16,26 @@
         <action
             android:id="@+id/action_fragmentAll_to_fragmentCadastro"
             app:destination="@id/fragmentCadastro" />
+        <action
+            android:id="@+id/action_fragmentAll_self"
+            app:destination="@id/fragmentAll" />
     </fragment>
     <fragment
         android:id="@+id/fragmentUpdate"
         android:name="com.androidstudio.gettxtroomrx.fragments.update.FragmentUpdate"
         android:label="fragment_update"
-        tools:layout="@layout/fragment_update" />
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_fragmentUpdate_to_fragmentAll"
+            app:destination="@id/fragmentAll" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentCadastro"
         android:name="com.androidstudio.gettxtroomrx.fragments.cadastro.FragmentCadastro"
         android:label="fragment_cadastro"
-        tools:layout="@layout/fragment_cadastro" />
+        tools:layout="@layout/fragment_cadastro" >
+        <action
+            android:id="@+id/action_fragmentCadastro_to_fragmentAll"
+            app:destination="@id/fragmentAll" />
+    </fragment>
 </navigation>

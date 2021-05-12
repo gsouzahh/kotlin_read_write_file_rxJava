@@ -19,4 +19,8 @@ data class FuncEntity(
     var reservado1: String = "",
     @ColumnInfo(name = "reservado2")
     var reservado2: String = ""
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "${codFunc};${descFunc};${complemento};${reservado1};${reservado2}"
+    }
+}

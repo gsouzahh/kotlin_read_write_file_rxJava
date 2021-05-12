@@ -10,4 +10,8 @@
     <string name="cargo">Cargo</string>
     <string name="nome">Nome</string>
     <string name="atualizar_dados">Atualizar Dados</string>
+    <string name="nome_">Nome:</string>
+    <string name="complemento_">Complemento:</string>
+    <string name="reservado_1_">Reservado(1):</string>
+    <string name="reservado_2_">Reservado(2):</string>
 </resources>

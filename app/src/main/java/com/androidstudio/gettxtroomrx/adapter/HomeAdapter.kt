@@ -1,5 +1,6 @@
 package com.androidstudio.gettxtroomrx.adapter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,9 +31,7 @@ class HomeAdapter(var listas: MutableList<FuncEntity>) : RecyclerView.Adapter<Ho
         }
     }
 
-    override fun getItemCount(): Int {
-        return listas.size
-    }
+    override fun getItemCount(): Int = listas.size
 
     fun getUsers(list: MutableList<FuncEntity>) {
         listas = list
@@ -43,6 +42,7 @@ class HomeAdapter(var listas: MutableList<FuncEntity>) : RecyclerView.Adapter<Ho
         private val nome = itemView.findViewById<TextView>(R.id.txtNome)
         private val cargo = itemView.findViewById<TextView>(R.id.txtCargo)
 
+        @SuppressLint("SetTextI18n")
         fun bindView(func: FuncEntity) {
             nome.text = func.descFunc
             cargo.text = "Cargo: ${func.complemento}"

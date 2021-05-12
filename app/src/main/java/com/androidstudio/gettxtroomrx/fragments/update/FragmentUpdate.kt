@@ -1,10 +1,10 @@
 package com.androidstudio.gettxtroomrx.fragments.update
 
-import android.app.Application
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Environment
-import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +13,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.androidstudio.gettxtroomrx.R
-import com.androidstudio.gettxtroomrx.fragments.all.AllViewModel
-import com.androidstudio.gettxtroomrx.model.Funcionario
 import com.androidstudio.gettxtroomrx.network.FuncEntity
-import kotlinx.android.synthetic.main.fragment_update.*
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_update.view.*
-import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import kotlin.math.log
 
 class FragmentUpdate : Fragment() {
 
@@ -47,32 +43,45 @@ class FragmentUpdate : Fragment() {
             arrayListOf<EditText>(root.editNome, root.editCargo, root.editRes1, root.editRes2)
 
         root.buttonUpdate.setOnClickListener {
-
-            /*val downloads = root.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-            val txt = "0000001157;Guilherme SOUZA;O;1157;14\n00000011527;renan SOUZA;O;1157;124"
-            val file = File(downloads, "C_FUNC.txt")
-
-            file.createNewFile()
-
-            file.writeText(txt)*/
-
-            /*val file2 = File(downloads, "C_FUNC.txt")
-            val contents = file2.readText() // Read file
-            println("resultado: $contents")*/
-
-            if (valFields(list)) {
+            if (validFields(list)) {
                 updateViewModel.Update(id, list)
 
                 updateViewModel.m_nFunc.observe(viewLifecycleOwner, Observer {
                     updateViewModel.funcRepository.update(it)
                 })
+                updateViewModel.updateData()
+
+                updateViewModel.m_listUpdate.observe(viewLifecycleOwner, Observer {
+                    UpdateFile(it, root.context)
+                })
+                Toast.makeText(root.context, "Sucesso!", Toast.LENGTH_SHORT).show()
+                Navigation.findNavController(root)
+                    .navigate(R.id.action_fragmentUpdate_to_fragmentAll)
             } else
                 Toast.makeText(root.context, "Preencha algum campo!", Toast.LENGTH_SHORT).show()
         }
         return root
     }
 
-    fun valFields(list: ArrayList<EditText>): Boolean {
+    @SuppressLint("CheckResult")
+    fun UpdateFile(list: Observable<MutableList<FuncEntity>>, context: Context) {
+        val downloads = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(downloads, "C_FUNC.txt")
+
+        if (file.exists())
+            file.delete()
+
+        val listanew = arrayListOf<String>()
+        file.createNewFile()
+
+        list.forEach {
+            it.forEach { om ->
+                listanew.add(om.toString())
+            }
+        }
+    }
+
+    fun validFields(list: ArrayList<EditText>): Boolean {
         for (a in list)
             if (a.text.toString() != "")
                 return true

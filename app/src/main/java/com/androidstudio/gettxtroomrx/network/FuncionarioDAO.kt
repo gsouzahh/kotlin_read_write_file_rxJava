@@ -20,5 +20,4 @@ interface FuncionarioDAO {
 
     @Query("SELECT * FROM func_table WHERE descFunc = :name")
     fun getFuncionario(name: String): FuncEntity
-
 }

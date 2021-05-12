@@ -28,7 +28,4 @@
         app:navGraph="@navigation/nav_main"
         tools:layout_editor_absoluteX="188dp"
         tools:layout_editor_absoluteY="390dp" />
-
-
-
 </RelativeLayout>

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/floatBtnCrud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -20,5 +20,17 @@
         android:backgroundTint="@color/black"
         android:src="@drawable/icon_add"
         android:layout_margin="20dp"
+        android:contentDescription="@string/cadastrar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatBtnUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:tintMode="add"
+        android:backgroundTint="@color/black"
+        android:src="@drawable/icon_add"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/cadastrar" />
 </FrameLayout>

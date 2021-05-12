@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Nome: "
+        android:text="@string/nome_"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/titleCrud"
         app:layout_constraintBottom_toBottomOf="@id/editName"/>
@@ -36,6 +36,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:backgroundTint="@color/zulao"
         app:layout_constraintTop_toBottomOf="@id/titleCrud"
         app:layout_constraintEnd_toEndOf="@id/titleCrud"
@@ -50,27 +51,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editName" />
-
     <TextView
         android:id="@+id/labelComplement"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Complemento: "
+        android:text="@string/complemento_"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/titleCrud"
         app:layout_constraintBottom_toBottomOf="@id/editComplement"/>
-
     <EditText
         android:id="@+id/editComplement"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/zulao"
+        android:textColor="@color/black"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/vLabelName"
         app:layout_constraintEnd_toEndOf="@id/titleCrud"
         app:layout_constraintStart_toEndOf="@id/labelComplement" />
-
     <View
         android:id="@+id/vLabelComplement"
         android:layout_width="0dp"
@@ -80,13 +79,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editComplement" />
-
     <TextView
         android:id="@+id/labelReservado1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Reservado(1): "
+        android:text="@string/reservado_1_"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/titleCrud"
         app:layout_constraintBottom_toBottomOf="@id/editRes1"/>
@@ -95,6 +93,8 @@
         android:id="@+id/editRes1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+
         android:backgroundTint="@color/zulao"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/vLabelComplement"
@@ -116,7 +116,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Reservado(2): "
+        android:text="@string/reservado_2_"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/titleCrud"
         app:layout_constraintBottom_toBottomOf="@id/editRes2"
@@ -125,6 +125,7 @@
     <EditText
         android:id="@+id/editRes2"
         android:layout_width="0dp"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/zulao"
         android:layout_marginTop="10dp"
@@ -133,16 +134,16 @@
         app:layout_constraintStart_toEndOf="@id/labelReservado2" />
 
     <Button
+        android:id="@+id/btnCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="15dp"
-        android:backgroundTint="@color/greydesable"
-        android:enabled="false"
+        android:backgroundTint="@color/zulao"
+        android:enabled="true"
         android:text="@string/cadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editRes2"
-        tools:backgroundTint="@color/zulao"
-        tools:enabled="true" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
