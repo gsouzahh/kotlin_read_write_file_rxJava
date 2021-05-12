@@ -41,7 +41,7 @@ class FragmentAll : Fragment() {
 
         observer()
 
-        root.floatBtnUpload.setOnClickListener{
+        root.floatBtnUpload.setOnClickListener {
             pegaArquivoDoDispositivo()
         }
 
@@ -72,14 +72,6 @@ class FragmentAll : Fragment() {
                     }
                 }
             }
-
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_fragmentAll_to_fragmentCadastro)
-
-            Navigation.findNavController(requireView()).popBackStack()
-
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_fragmentCadastro_to_fragmentAll)
         }
     }
 

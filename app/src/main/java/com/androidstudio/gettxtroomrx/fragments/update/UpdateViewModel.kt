@@ -39,7 +39,8 @@ class UpdateViewModel(apication: Application) : AndroidViewModel(apication) {
             )
         )
     }
-    fun updateData(){
+
+    fun updateData() {
         mListUpdate.postValue(funcRepository.getFuncionarios())
     }
 }

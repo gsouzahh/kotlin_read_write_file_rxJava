@@ -24,7 +24,6 @@ class AllViewModel(aplication: Application) : AndroidViewModel(aplication) {
     private var funcRoom = MutableLiveData<MutableList<FuncEntity>>()
     val m_funcRoom: LiveData<MutableList<FuncEntity>> = funcRoom
 
-    private var funcFile = MutableLiveData<MutableList<FuncEntity>>()
 
     fun getUserDataBase() {
         repo.getFuncionarios()
@@ -35,13 +34,12 @@ class AllViewModel(aplication: Application) : AndroidViewModel(aplication) {
             }
     }
 
-    @SuppressLint("CheckResult")
     fun getUserFromFile(context: Context, uri: Uri) {
         repo.lerConteudoArquivo(context, uri)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe { funcionario ->
-                funcFile.postValue(funcionario)
+                funcRoom.postValue(funcionario)
                 repo.save(funcionario)
             }
     }

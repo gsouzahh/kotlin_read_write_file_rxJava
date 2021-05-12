@@ -12,4 +12,4 @@ data class Funcionario(
     var complemento: String = "",
     var reservado1: String = "",
     var reservado2: String = ""
-): Serializable
+) : Serializable

@@ -79,6 +79,7 @@ class FragmentUpdate : Fragment() {
                 listanew.add(om.toString())
             }
         }
+        writeFile(listanew, file)
     }
 
     fun validFields(list: ArrayList<EditText>): Boolean {
@@ -87,5 +88,10 @@ class FragmentUpdate : Fragment() {
                 return true
 
         return false
+    }
+
+    fun writeFile(list: ArrayList<String>, file: File) {
+        for (it in list)
+            file.appendText("$it\n")
     }
 }

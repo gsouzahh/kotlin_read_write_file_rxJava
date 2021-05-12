@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidstudio.gettxtroomrx.R
 import com.androidstudio.gettxtroomrx.network.FuncEntity
 
-class HomeAdapter(var listas: MutableList<FuncEntity>) : RecyclerView.Adapter<HomeAdapter.UserViewHolder>() {
+class HomeAdapter(var listas: MutableList<FuncEntity>) :
+    RecyclerView.Adapter<HomeAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)

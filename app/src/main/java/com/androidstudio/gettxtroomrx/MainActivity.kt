@@ -10,6 +10,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbarMain.setTitle("Solinf: Funcionários")
+        toolbarMain.setTitle("Funcionários")
     }
 }

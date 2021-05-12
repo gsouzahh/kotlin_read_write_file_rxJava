@@ -21,38 +21,39 @@ class FuncRepository(context: Context) {
     fun saveUnique(func: FuncEntity) = mDataBase.saveUnique(func)
 
     fun getFuncionarios(): Observable<MutableList<FuncEntity>> {
-        return Observable.create{
+        return Observable.create {
             it.onNext(mDataBase.getFunc())
         }
     }
 
     fun update(func: FuncEntity) = mDataBase.updateMovie(func)
 
-    fun lerConteudoArquivo(context: Context, uri: Uri) = Observable.create<MutableList<FuncEntity>> {
-        val contentResolver = context.contentResolver
-        val userList = mutableListOf<FuncEntity>()
+    fun lerConteudoArquivo(context: Context, uri: Uri) =
+        Observable.create<MutableList<FuncEntity>> {
+            val contentResolver = context.contentResolver
+            val userList = mutableListOf<FuncEntity>()
 
-        val downloads = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(downloads, "C_FUNC.txt")
+            val downloads = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+            val file = File(downloads, "C_FUNC.txt")
 
-        if (file.exists())
-            file.delete()
+            if (file.exists())
+                file.delete()
 
-        file.createNewFile()
+            file.createNewFile()
 
-        contentResolver.openInputStream(uri)?.use { inputStream ->
-            BufferedReader(InputStreamReader(inputStream)).use { reader ->
-                var line: String? = reader.readLine()
-                while (line != null) {
-                    line.split(";").let {
-                        val newFunc = FuncEntity( it[0].toLong(), it[1], it[2], it[3], it[4])
-                        userList.add(newFunc)
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                    var line: String? = reader.readLine()
+                    while (line != null) {
+                        line.split(";").let {
+                            val newFunc = FuncEntity(it[0].toLong(), it[1], it[2], it[3], it[4])
+                            userList.add(newFunc)
+                        }
+                        file.appendText("$line\n")
+                        line = reader.readLine()
                     }
-                    file.appendText("$line\n")
-                    line = reader.readLine()
                 }
             }
+            it.onNext(userList)
         }
-        it.onNext(userList)
-    }
 }
