@@ -15,48 +15,68 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidstudio.gettxtroomrx.R
 import com.androidstudio.gettxtroomrx.adapter.HomeAdapter
-import com.androidstudio.gettxtroomrx.fragments.cadastro.CadastroViewModel
-import kotlinx.android.synthetic.main.fragment_all.view.*
+import com.androidstudio.gettxtroomrx.databinding.FragmentAllBinding
 
 class FragmentAll : Fragment() {
 
+    private var _binding: FragmentAllBinding? = null
+    private val binding: FragmentAllBinding get() = _binding!!
+
     private lateinit var funcViewModel: AllViewModel
-    private lateinit var crudViewModel: CadastroViewModel
     private lateinit var homeAdapter: HomeAdapter
+
     private val FILE_PICK_CODE = 1000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_all, container, false)
+    ): View {
+        _binding = FragmentAllBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentAllBinding.bind(view)
 
         funcViewModel = ViewModelProvider(this).get(AllViewModel::class.java)
 
-        crudViewModel = ViewModelProvider(this).get(CadastroViewModel::class.java)
+        homeAdapter = HomeAdapter(arrayListOf()){
+            val currentItem = it
+            val myBundle = Bundle()
+            myBundle.putSerializable("movieItem", currentItem)
 
-        homeAdapter = HomeAdapter(arrayListOf())
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_fragmentAll_to_fragmentUpdate, myBundle)
+        }
 
-        clickCadastrar(root.floatBtnCrud)
+//        mlistener = object : Listener{
+//            override fun clickAdapter(func: FuncEntity) {
+//                val currentItem = func
+//                val myBundle = Bundle()
+//                myBundle.putSerializable("movieItem", currentItem)
+//
+//                Navigation.findNavController(requireView())
+//                    .navigate(R.id.action_fragmentAll_to_fragmentUpdate, myBundle)
+//            }
+//        }
+
+        binding.floatBtnCrud.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_fragmentAll_to_fragmentCadastro)
+        }
+
+        binding.floatBtnUpload.setOnClickListener {
+            getFileInDevice()
+        }
 
         observer()
 
-        root.floatBtnUpload.setOnClickListener {
-            pegaArquivoDoDispositivo()
-        }
-
-        with(root.recyclerHome) {
-            layoutManager = LinearLayoutManager(root.context, RecyclerView.VERTICAL, false)
+        with(binding.recyclerHome) {
+            layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
             adapter = homeAdapter
         }
-
-        return root
-    }
-
-    override fun onResume() {
-        funcViewModel.getUserDataBase()
-        super.onResume()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -65,17 +85,15 @@ class FragmentAll : Fragment() {
         if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
             data.also { intent ->
                 intent?.data?.also { uri ->
-                    crudViewModel.setUrlFile(uri.path.toString())
                     context?.let { context ->
                         funcViewModel.getUserFromFile(context, uri)
-
                     }
                 }
             }
         }
     }
 
-    fun pegaArquivoDoDispositivo() {
+    fun getFileInDevice() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "text/plain"
         intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
@@ -83,15 +101,16 @@ class FragmentAll : Fragment() {
         startActivityForResult(intent, FILE_PICK_CODE)
     }
 
-    fun clickCadastrar(view: View) {
-        view.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_fragmentAll_to_fragmentCadastro)
-        }
-    }
-
     fun observer() {
         funcViewModel.m_funcRoom.observe(viewLifecycleOwner, Observer {
             homeAdapter.getUsers(it)
+            homeAdapter.updateListener(it)
         })
+        funcViewModel.getUserDataBase()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

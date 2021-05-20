@@ -14,4 +14,7 @@
     <string name="complemento_">Complemento:</string>
     <string name="reservado_1_">Reservado(1):</string>
     <string name="reservado_2_">Reservado(2):</string>
+    <string name="preencha_todos_campos">Preencha todos campo!</string>
+    <string name="sucesso">Sucesso!</string>
+    <string name="erro">Erro na execução!</string>
 </resources>

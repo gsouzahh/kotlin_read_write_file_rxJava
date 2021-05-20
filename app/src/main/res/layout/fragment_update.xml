@@ -38,6 +38,7 @@
         android:layout_width="0dp"
         android:textColor="@color/zulao"
         android:layout_marginTop="10dp"
+        android:textAllCaps="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:backgroundTint="@color/zulao"
@@ -50,6 +51,7 @@
     <EditText
         android:id="@+id/editCargo"
         android:layout_width="0dp"
+        android:textAllCaps="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:backgroundTint="@color/zulao"
@@ -63,6 +65,8 @@
     <EditText
         android:id="@+id/editRes1"
         android:layout_width="0dp"
+        android:textAllCaps="true"
+        android:inputType="numberSigned"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:backgroundTint="@color/zulao"
@@ -79,6 +83,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:textColor="@color/zulao"
+        android:textAllCaps="true"
+        android:inputType="numberSigned"
         android:backgroundTint="@color/zulao"
         android:textColorHint="@color/greydesable"
         app:layout_constraintEnd_toEndOf="parent"

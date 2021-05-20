@@ -3,95 +3,93 @@ package com.androidstudio.gettxtroomrx.fragments.update
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.androidstudio.gettxtroomrx.R
+import com.androidstudio.gettxtroomrx.databinding.FragmentAllBinding
+import com.androidstudio.gettxtroomrx.databinding.FragmentUpdateBinding
 import com.androidstudio.gettxtroomrx.network.FuncEntity
-import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_update.view.*
-import java.io.File
 
-class FragmentUpdate : Fragment() {
+class FragmentUpdate() : Fragment() {
 
     private lateinit var updateViewModel: UpdateViewModel
+    private var _binding: FragmentUpdateBinding? = null
+    private val binding: FragmentUpdateBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_update, container, false)
+    ): View {
+        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    @SuppressLint("DefaultLocale")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentUpdateBinding.bind(view)
         val arguments = arguments?.getSerializable("movieItem") as FuncEntity
         val id = arguments.codFunc
 
         updateViewModel = ViewModelProvider(this).get(UpdateViewModel::class.java)
 
-        root.editNome.hint = arguments.descFunc
-        root.editCargo.hint = arguments.complemento
-        root.editRes1.hint = arguments.reservado1
-        root.editRes2.hint = arguments.reservado2
+        binding.editNome.hint = arguments.descFunc
+        binding.editCargo.hint = arguments.complemento
+        binding.editRes1.hint = arguments.reservado1
+        binding.editRes2.hint = arguments.reservado2
 
-        val list =
-            arrayListOf<EditText>(root.editNome, root.editCargo, root.editRes1, root.editRes2)
+        binding.buttonUpdate.setOnClickListener {
+            if (
+                binding.editNome.text.isNullOrEmpty() &&
+                binding.editCargo.text.isNullOrEmpty() &&
+                binding.editRes1.text.isNullOrEmpty() &&
+                binding.editRes2.text.isNullOrEmpty()
+            ) {
+                val func = FuncEntity(
+                    id,
+                    binding.editNome.text.toString().toUpperCase(),
+                    binding.editCargo.text.toString().toUpperCase(),
+                    binding.editRes1.text.toString(),
+                    binding.editRes2.text.toString()
+                )
 
-        root.buttonUpdate.setOnClickListener {
-            if (validFields(list)) {
-                updateViewModel.Update(id, list)
-
-                updateViewModel.m_nFunc.observe(viewLifecycleOwner, Observer {
-                    updateViewModel.funcRepository.update(it)
-                })
+                updateViewModel.Update(func)
                 updateViewModel.updateData()
 
-                updateViewModel.m_listUpdate.observe(viewLifecycleOwner, Observer {
-                    UpdateFile(it, root.context)
-                })
-                Toast.makeText(root.context, "Sucesso!", Toast.LENGTH_SHORT).show()
-                Navigation.findNavController(root)
+                Toast.makeText(
+                    binding.root.context,
+                    getString(R.string.sucesso),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Navigation.findNavController(binding.root)
                     .navigate(R.id.action_fragmentUpdate_to_fragmentAll)
             } else
-                Toast.makeText(root.context, "Preencha algum campo!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    binding.root.context,
+                    getString(R.string.preencha_todos_campos),
+                    Toast.LENGTH_SHORT
+                ).show()
         }
-        return root
+
+        observer(binding.root.context)
     }
 
-    @SuppressLint("CheckResult")
-    fun UpdateFile(list: Observable<MutableList<FuncEntity>>, context: Context) {
-        val downloads = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(downloads, "C_FUNC.txt")
-
-        if (file.exists())
-            file.delete()
-
-        val listanew = arrayListOf<String>()
-        file.createNewFile()
-
-        list.forEach {
-            it.forEach { om ->
-                listanew.add(om.toString())
-            }
-        }
-        writeFile(listanew, file)
+    fun observer(root: Context) {
+        updateViewModel.m_listUpdate.observe(viewLifecycleOwner, Observer {
+            updateViewModel.UpdateFile(it, root)
+        })
     }
 
-    fun validFields(list: ArrayList<EditText>): Boolean {
-        for (a in list)
-            if (a.text.toString() != "")
-                return true
-
-        return false
-    }
-
-    fun writeFile(list: ArrayList<String>, file: File) {
-        for (it in list)
-            file.appendText("$it\n")
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

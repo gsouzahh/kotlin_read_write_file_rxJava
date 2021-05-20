@@ -19,7 +19,7 @@ abstract class RepoDataBase : RoomDatabase() {
                 synchronized(this) {
                     INSTANCE = Room.databaseBuilder(context, RepoDataBase::class.java, "FuncDB")
                         .fallbackToDestructiveMigration()
-                        .allowMainThreadQueries()
+                        //.allowMainThreadQueries()
                         .build()
                 }
             }
