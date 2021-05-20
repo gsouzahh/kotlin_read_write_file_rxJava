@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.androidstudio.gettxtroomrx.databinding.ItemListBinding
-import com.androidstudio.gettxtroomrx.network.FuncEntity
+import com.androidstudio.gettxtroomrx.db.FuncEntity
 
 class HomeAdapter(
-    var listas: List<FuncEntity>,
+    var list: List<FuncEntity>,
     private val clickList: (FuncEntity) -> Unit
     ) :
     RecyclerView.Adapter<HomeAdapter.UserViewHolder>() {
@@ -18,12 +18,12 @@ class HomeAdapter(
         return UserViewHolder(allBinding)
     }
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) = holder.bindView(listas[position], clickList)
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) = holder.bindView(list[position], clickList)
 
-    override fun getItemCount(): Int = listas.size
+    override fun getItemCount(): Int = list.size
 
     fun getUsers(list: List<FuncEntity>) {
-        listas = list
+        this.list = list
         notifyDataSetChanged()
     }
 
@@ -37,7 +37,7 @@ class HomeAdapter(
     }
 
     fun updateListener(func: List<FuncEntity>){
-        listas = func
+        list = func
         notifyDataSetChanged()
     }
 }

@@ -7,8 +7,8 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.androidstudio.gettxtroomrx.network.FuncEntity
-import com.androidstudio.gettxtroomrx.network.FuncRepository
+import com.androidstudio.gettxtroomrx.db.FuncEntity
+import com.androidstudio.gettxtroomrx.db.FuncRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 

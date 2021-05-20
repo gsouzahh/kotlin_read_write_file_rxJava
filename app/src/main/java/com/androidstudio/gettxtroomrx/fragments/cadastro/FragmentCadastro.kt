@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.androidstudio.gettxtroomrx.R
 import com.androidstudio.gettxtroomrx.databinding.FragmentCadastroBinding
-import com.androidstudio.gettxtroomrx.network.FuncEntity
+import com.androidstudio.gettxtroomrx.db.FuncEntity
 
 class FragmentCadastro : Fragment() {
 

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androidstudio.gettxtroomrx.R
 import com.androidstudio.gettxtroomrx.adapter.HomeAdapter
 import com.androidstudio.gettxtroomrx.databinding.FragmentAllBinding
+import com.androidstudio.gettxtroomrx.model.Constants
 
 class FragmentAll : Fragment() {
 
@@ -23,9 +24,8 @@ class FragmentAll : Fragment() {
     private val binding: FragmentAllBinding get() = _binding!!
 
     private lateinit var funcViewModel: AllViewModel
-    private lateinit var homeAdapter: HomeAdapter
 
-    private val FILE_PICK_CODE = 1000
+    private lateinit var homeAdapter: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +38,9 @@ class FragmentAll : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentAllBinding.bind(view)
-
         funcViewModel = ViewModelProvider(this).get(AllViewModel::class.java)
 
-        homeAdapter = HomeAdapter(arrayListOf()){
+        homeAdapter = HomeAdapter(arrayListOf()) {
             val currentItem = it
             val myBundle = Bundle()
             myBundle.putSerializable("movieItem", currentItem)
@@ -51,24 +49,9 @@ class FragmentAll : Fragment() {
                 .navigate(R.id.action_fragmentAll_to_fragmentUpdate, myBundle)
         }
 
-//        mlistener = object : Listener{
-//            override fun clickAdapter(func: FuncEntity) {
-//                val currentItem = func
-//                val myBundle = Bundle()
-//                myBundle.putSerializable("movieItem", currentItem)
-//
-//                Navigation.findNavController(requireView())
-//                    .navigate(R.id.action_fragmentAll_to_fragmentUpdate, myBundle)
-//            }
-//        }
+        binding.floatBtnCrud.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_fragmentAll_to_fragmentCadastro) }
 
-        binding.floatBtnCrud.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_fragmentAll_to_fragmentCadastro)
-        }
-
-        binding.floatBtnUpload.setOnClickListener {
-            getFileInDevice()
-        }
+        binding.floatBtnUpload.setOnClickListener { getFileInDevice() }
 
         observer()
 
@@ -98,7 +81,7 @@ class FragmentAll : Fragment() {
         intent.type = "text/plain"
         intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
         intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-        startActivityForResult(intent, FILE_PICK_CODE)
+        startActivityForResult(intent, Constants.FILE_PICK_CODE)
     }
 
     fun observer() {

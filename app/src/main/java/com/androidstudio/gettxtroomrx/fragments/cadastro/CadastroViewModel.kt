@@ -5,8 +5,8 @@ import android.os.Environment
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import com.androidstudio.gettxtroomrx.model.Constants
-import com.androidstudio.gettxtroomrx.network.FuncEntity
-import com.androidstudio.gettxtroomrx.network.FuncRepository
+import com.androidstudio.gettxtroomrx.db.FuncEntity
+import com.androidstudio.gettxtroomrx.db.FuncRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

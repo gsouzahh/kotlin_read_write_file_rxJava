@@ -12,9 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.androidstudio.gettxtroomrx.R
-import com.androidstudio.gettxtroomrx.databinding.FragmentAllBinding
 import com.androidstudio.gettxtroomrx.databinding.FragmentUpdateBinding
-import com.androidstudio.gettxtroomrx.network.FuncEntity
+import com.androidstudio.gettxtroomrx.db.FuncEntity
 
 class FragmentUpdate() : Fragment() {
 
@@ -47,11 +46,18 @@ class FragmentUpdate() : Fragment() {
 
         binding.buttonUpdate.setOnClickListener {
             if (
-                binding.editNome.text.isNullOrEmpty() &&
-                binding.editCargo.text.isNullOrEmpty() &&
-                binding.editRes1.text.isNullOrEmpty() &&
+                binding.editNome.text.isNullOrEmpty() ||
+                binding.editCargo.text.isNullOrEmpty() ||
+                binding.editRes1.text.isNullOrEmpty() ||
                 binding.editRes2.text.isNullOrEmpty()
             ) {
+                Toast.makeText(
+                    binding.root.context,
+                    getString(R.string.preencha_todos_campos),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else{
+
                 val func = FuncEntity(
                     id,
                     binding.editNome.text.toString().toUpperCase(),
@@ -71,21 +77,8 @@ class FragmentUpdate() : Fragment() {
 
                 Navigation.findNavController(binding.root)
                     .navigate(R.id.action_fragmentUpdate_to_fragmentAll)
-            } else
-                Toast.makeText(
-                    binding.root.context,
-                    getString(R.string.preencha_todos_campos),
-                    Toast.LENGTH_SHORT
-                ).show()
+            }
         }
-
-        observer(binding.root.context)
-    }
-
-    fun observer(root: Context) {
-        updateViewModel.m_listUpdate.observe(viewLifecycleOwner, Observer {
-            updateViewModel.UpdateFile(it, root)
-        })
     }
 
     override fun onDestroy() {
